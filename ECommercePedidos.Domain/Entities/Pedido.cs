@@ -16,7 +16,7 @@ namespace ECommercePedidos.Domain.Entities
         public bool Ativo { get; private set; }
 
         private readonly List<ItemPedido> _itens = [];
-        private IReadOnlyCollection<ItemPedido> Itens => _itens.AsReadOnly();
+        public IReadOnlyCollection<ItemPedido> Itens => _itens.AsReadOnly();
 
         protected Pedido() { } 
 
