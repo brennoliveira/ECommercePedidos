@@ -1,5 +1,6 @@
 ﻿using ECommercePedidos.Application.UseCases.AtualizarPedido;
 using ECommercePedidos.Application.UseCases.CriarPedido;
+using ECommercePedidos.Application.UseCases.DeletarPedido;
 using ECommercePedidos.Application.UseCases.ObterPedidoPorId;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,14 @@ namespace ECommercePedidos.Api.Controllers
     public class PedidosController(
         ICriarPedidoUseCase criarPedidoUseCase,
         IObterPedidoPorIdUseCase obterPedidoPorIdUseCase,
-        IAtualizarPedidoUseCase atualizarPedidoUseCase)
+        IAtualizarPedidoUseCase atualizarPedidoUseCase,
+        IDeletarPedidoUseCase deletarPedidoUseCase)
         : ControllerBase
     {
         private readonly ICriarPedidoUseCase _criarPedidoUseCase = criarPedidoUseCase;
         private readonly IObterPedidoPorIdUseCase obterPedidoPorIdUseCase = obterPedidoPorIdUseCase;
         private readonly IAtualizarPedidoUseCase _atualizarPedidoUseCase = atualizarPedidoUseCase;
+        private readonly IDeletarPedidoUseCase _deletarPedidoUseCase = deletarPedidoUseCase;
 
         [HttpPost]
         public async Task<IActionResult> CriarPedido([FromBody] CriarPedidoInput input)
@@ -55,6 +58,24 @@ namespace ECommercePedidos.Api.Controllers
             try
             {
                 var resultado = await _atualizarPedidoUseCase.ExecutarAsync(id, input);
+                if (!resultado)
+                    return NotFound();
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeletarPedido([FromQuery] Guid id)
+        {
+            try
+            {
+                var resultado = await _deletarPedidoUseCase.ExecutarAsync(id);
+
                 if (!resultado)
                     return NotFound();
 
