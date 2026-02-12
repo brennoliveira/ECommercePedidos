@@ -2,6 +2,7 @@ using ECommercePedidos.Application.UseCases.AtualizarPedido;
 using ECommercePedidos.Application.UseCases.CriarPedido;
 using ECommercePedidos.Application.UseCases.DeletarPedido;
 using ECommercePedidos.Application.UseCases.ObterPedidoPorId;
+using ECommercePedidos.Application.UseCases.ObterTodosPedidos;
 using ECommercePedidos.Domain.Interfaces.Repositories;
 using ECommercePedidos.Infrastructure.Data;
 using ECommercePedidos.Infrastructure.Messaging;
@@ -17,8 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
+
 builder.Services.AddScoped<ICriarPedidoUseCase, CriarPedidoUseCase>();
 builder.Services.AddScoped<IObterPedidoPorIdUseCase, ObterPedidoUseCase>();
+builder.Services.AddScoped<IObterTodosPedidosUseCase, ObterTodosPedidosUseCase>();
 builder.Services.AddScoped<IAtualizarPedidoUseCase, AtualizarPedidoUseCase>();
 builder.Services.AddScoped<IDeletarPedidoUseCase, DeletarPedidoUseCase>();
 

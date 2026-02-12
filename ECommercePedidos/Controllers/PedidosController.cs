@@ -2,6 +2,8 @@
 using ECommercePedidos.Application.UseCases.CriarPedido;
 using ECommercePedidos.Application.UseCases.DeletarPedido;
 using ECommercePedidos.Application.UseCases.ObterPedidoPorId;
+using ECommercePedidos.Application.UseCases.ObterTodosPedidos;
+using ECommercePedidos.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommercePedidos.Api.Controllers
@@ -11,12 +13,14 @@ namespace ECommercePedidos.Api.Controllers
     public class PedidosController(
         ICriarPedidoUseCase criarPedidoUseCase,
         IObterPedidoPorIdUseCase obterPedidoPorIdUseCase,
+        IObterTodosPedidosUseCase obterTodosPedidosUseCase,
         IAtualizarPedidoUseCase atualizarPedidoUseCase,
         IDeletarPedidoUseCase deletarPedidoUseCase)
         : ControllerBase
     {
         private readonly ICriarPedidoUseCase _criarPedidoUseCase = criarPedidoUseCase;
         private readonly IObterPedidoPorIdUseCase obterPedidoPorIdUseCase = obterPedidoPorIdUseCase;
+        private readonly IObterTodosPedidosUseCase obterTodosPedidosUseCase = obterTodosPedidosUseCase;
         private readonly IAtualizarPedidoUseCase _atualizarPedidoUseCase = atualizarPedidoUseCase;
         private readonly IDeletarPedidoUseCase _deletarPedidoUseCase = deletarPedidoUseCase;
 
@@ -45,6 +49,24 @@ namespace ECommercePedidos.Api.Controllers
                     return NotFound();
 
                 return Ok(pedido);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObterTodosPedidos(
+            [FromQuery] PedidoStatus? status,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                var pedidos = await obterTodosPedidosUseCase.ExecutarAsync(page, pageSize, status);
+
+                return Ok(pedidos);
             }
             catch (Exception ex)
             {
