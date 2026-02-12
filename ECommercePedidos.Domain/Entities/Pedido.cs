@@ -29,8 +29,15 @@ namespace ECommercePedidos.Domain.Entities
             Ativo = true;
         }
 
+        public void RecalcularValorTotal()
+        {
+            ValorTotal = _itens.Sum(i => i.SubTotal);
+        }
         public void AdicionarItem(string produto, int quantidade, decimal precoUnitario)
         {
+            if (Status != PedidoStatus.Recebido)
+                throw new InvalidOperationException("Não é possível alterar um pedido já processado.");
+
             if (quantidade <= 0)
                 throw new ArgumentException("Quantidade deve ser maior que zero.");
 
@@ -43,9 +50,15 @@ namespace ECommercePedidos.Domain.Entities
             RecalcularValorTotal();
         }
 
-        public void RecalcularValorTotal()
+        public void AtualizarItens(List<ItemPedido> itens)
         {
-            ValorTotal = _itens.Sum(i => i.SubTotal);
+            if (Status != PedidoStatus.Recebido)
+                throw new InvalidOperationException("Não é possível alterar um pedido já processado.");
+
+            _itens.Clear();
+            _itens.AddRange(itens);
+
+            RecalcularValorTotal();
         }
 
         public void MarcarComoProcessado()

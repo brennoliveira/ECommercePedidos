@@ -1,3 +1,4 @@
+using ECommercePedidos.Application.UseCases.AtualizarPedido;
 using ECommercePedidos.Application.UseCases.CriarPedido;
 using ECommercePedidos.Application.UseCases.ObterPedidoPorId;
 using ECommercePedidos.Domain.Interfaces.Repositories;
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<ICriarPedidoUseCase, CriarPedidoUseCase>();
 builder.Services.AddScoped<IObterPedidoPorIdUseCase, ObterPedidoUseCase>();
+builder.Services.AddScoped<IAtualizarPedidoUseCase, AtualizarPedidoUseCase>();
 
 builder.Services.AddScoped<IMessageBus, MessageBus>();
 
