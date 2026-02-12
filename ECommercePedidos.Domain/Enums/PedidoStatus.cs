@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ECommercePedidos.Domain.Enums
+{
+    public enum PedidoStatus
+    {
+        Recebido = 1,
+        Processado = 2,
+        Cancelado = 3,
+    }
+}
