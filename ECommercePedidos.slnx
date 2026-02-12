@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="ECommercePedidos.Application/ECommercePedidos.Application.csproj" />
   <Project Path="ECommercePedidos.Domain/ECommercePedidos.Domain.csproj" />
   <Project Path="ECommercePedidos.Infrastructure/ECommercePedidos.Infrastructure.csproj" />
