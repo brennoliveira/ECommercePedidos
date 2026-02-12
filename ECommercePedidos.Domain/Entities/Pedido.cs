@@ -71,6 +71,9 @@ namespace ECommercePedidos.Domain.Entities
 
         public void Cancelar()
         {
+            if (Status == PedidoStatus.Processado)
+                throw new InvalidOperationException("Não é possível cancelar um pedido já processado.");
+
             Ativo = false;
             Status = PedidoStatus.Cancelado;
         }
