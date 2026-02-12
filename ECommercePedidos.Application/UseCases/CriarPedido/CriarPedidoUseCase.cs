@@ -10,7 +10,7 @@ namespace ECommercePedidos.Application.UseCases.CriarPedido
 {
     public class CriarPedidoUseCase(
         IPedidoRepository pedidoRepository,
-        IMessageBus messageBus)
+        IMessageBus messageBus) : ICriarPedidoUseCase
     {
         private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
         private readonly IMessageBus _messageBus = messageBus;
