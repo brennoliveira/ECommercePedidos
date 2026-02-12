@@ -1,4 +1,5 @@
 ﻿using ECommercePedidos.Domain.Entities;
+using ECommercePedidos.Domain.Enums;
 using ECommercePedidos.Domain.Interfaces.Repositories;
 using ECommercePedidos.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -32,11 +33,19 @@ namespace ECommercePedidos.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id && p.Ativo);
         }
 
-        public async Task<IEnumerable<Pedido>> ObterTodosPedidosAsync()
+        public async Task<IEnumerable<Pedido>> ObterTodosPedidosAsync(int page, int pageSize, PedidoStatus? status)
         {
-            return await _context.Pedidos
+            var query = _context.Pedidos
                 .Include(p => p.Itens)
                 .Where(p => p.Ativo)
+                .AsQueryable();
+
+            if (status.HasValue)
+                query = query.Where(p => p.Status == status.Value);
+
+            return await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }   
 

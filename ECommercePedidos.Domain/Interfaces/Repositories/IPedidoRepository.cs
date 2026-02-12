@@ -1,4 +1,5 @@
 ﻿using ECommercePedidos.Domain.Entities;
+using ECommercePedidos.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ECommercePedidos.Domain.Interfaces.Repositories
     {
         Task AdicionarPedidoAsync(Pedido pedido);
         Task<Pedido?> ObterPedidoPorIdAsync(Guid id);
-        Task<IEnumerable<Pedido>> ObterTodosPedidosAsync();
+        Task<IEnumerable<Pedido>> ObterTodosPedidosAsync(int page, int pageSize, PedidoStatus? status);
         Task AtualizarPedidoAsync(Pedido pedido);
         Task ExcluirPedidoAsync(Guid id);
     }
