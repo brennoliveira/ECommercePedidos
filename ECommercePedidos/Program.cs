@@ -1,6 +1,7 @@
 using ECommercePedidos.Application.UseCases.CriarPedido;
 using ECommercePedidos.Domain.Interfaces.Repositories;
 using ECommercePedidos.Infrastructure.Data;
+using ECommercePedidos.Infrastructure.Messaging;
 using ECommercePedidos.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<ICriarPedidoUseCase, CriarPedidoUseCase>();
+
+builder.Services.AddScoped<IMessageBus, MessageBus>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
