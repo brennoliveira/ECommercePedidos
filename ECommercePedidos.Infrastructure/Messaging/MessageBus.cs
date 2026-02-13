@@ -18,13 +18,12 @@ namespace ECommercePedidos.Infrastructure.Messaging
 
         private async Task EnsureConnectionAsync()
         {
-            if (_connection == null)
+            if (_connection is { IsOpen: true } && _channel is not null)
                 return;
 
             var factory = new ConnectionFactory()
             {
                 HostName = "localhost",
-                Port = 5672,
                 UserName = "guest",
                 Password = "guest"
             };
@@ -34,7 +33,7 @@ namespace ECommercePedidos.Infrastructure.Messaging
 
             await _channel.QueueDeclareAsync(
                 queue: QueueName,
-                durable: true,
+                durable: false,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
@@ -51,6 +50,11 @@ namespace ECommercePedidos.Infrastructure.Messaging
             };
 
             var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(message));
+
+            if (_channel == null)
+            {
+                throw new Exception("Channel não foi criado.");
+            }
 
             await _channel!.BasicPublishAsync(
                 exchange: string.Empty,
