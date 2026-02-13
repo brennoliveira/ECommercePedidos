@@ -3,6 +3,7 @@ using ECommercePedidos.Application.UseCases.CriarPedido;
 using ECommercePedidos.Application.UseCases.DeletarPedido;
 using ECommercePedidos.Application.UseCases.ObterPedidoPorId;
 using ECommercePedidos.Application.UseCases.ObterTodosPedidos;
+using ECommercePedidos.Domain.Interfaces.Messaging;
 using ECommercePedidos.Domain.Interfaces.Repositories;
 using ECommercePedidos.Infrastructure.Data;
 using ECommercePedidos.Infrastructure.Messaging;

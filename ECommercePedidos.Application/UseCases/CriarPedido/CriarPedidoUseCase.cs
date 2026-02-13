@@ -1,4 +1,5 @@
 ﻿using ECommercePedidos.Domain.Entities;
+using ECommercePedidos.Domain.Interfaces.Messaging;
 using ECommercePedidos.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;

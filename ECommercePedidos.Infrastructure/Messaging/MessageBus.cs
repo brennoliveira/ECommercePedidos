@@ -1,15 +1,16 @@
-﻿using System;
+﻿using ECommercePedidos.Domain.Interfaces.Messaging;
+using Microsoft.EntityFrameworkCore.Metadata;
+using RabbitMQ.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using ECommercePedidos.Domain.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore.Metadata;
-using RabbitMQ.Client;
 
 namespace ECommercePedidos.Infrastructure.Messaging
 {
-    public class MessageBus : IMessageBus, IAsyncDisposable
+    public class MessageBus : IMessageBus
     {
         private IConnection? _connection;
         private IChannel? _channel;
@@ -49,7 +50,7 @@ namespace ECommercePedidos.Infrastructure.Messaging
                 DataCriacao = DateTime.UtcNow
             };
 
-            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(message));
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
             if (_channel == null)
             {
